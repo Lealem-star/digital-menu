@@ -7,7 +7,7 @@ import Footer from './components/Footer';
 import AdminPage from './admin/AdminPage';
 import AdminLayout from './admin/AdminLayout';
 import LoginPage from './admin/LoginPage';
-import AddFoodItemPage from './admin/AddFoodItemPage';
+import MenuSettingsPage from './admin/MenuSettingsPage';
 
 function App() {
   const isAuthed = Boolean(localStorage.getItem('token'));
@@ -25,8 +25,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/admin" element={isAuthed ? <AdminLayout /> : <Navigate to="/login" replace />}>
-            <Route index element={<AdminPage />} />
-            <Route path="add-food-item" element={<AddFoodItemPage />} />
+            <Route index element={<Navigate to="/admin/menu-settings" replace />} />
+            <Route path="menu-settings" element={<MenuSettingsPage />} />
           </Route>
         </Routes>
       </main>

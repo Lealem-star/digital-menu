@@ -33,3 +33,31 @@ export async function login(email, password) {
 export async function getMe() {
     return request('/admin/me');
 }
+
+export async function getMenuItems() {
+    return request('/admin/menu');
+}
+
+export async function addMenuItem(itemData) {
+    return request('/admin/menu', {
+        method: 'POST',
+        body: JSON.stringify(itemData)
+    });
+}
+
+export async function updateMenuItem(id, itemData) {
+    return request(`/admin/menu/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(itemData)
+    });
+}
+
+export async function deleteMenuItem(id) {
+    return request(`/admin/menu/${id}`, {
+        method: 'DELETE'
+    });
+}
+
+export async function getCategories() {
+    return request('/admin/categories');
+}

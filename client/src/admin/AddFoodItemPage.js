@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { addMenuItem } from '../utils/api';
 
 export default function AddFoodItemPage() {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -20,11 +23,10 @@ export default function AddFoodItemPage() {
     setError(null);
 
     const newFoodItem = {
-      id: Date.now(), // Generate a unique ID for demonstration
       name,
       description,
       price: parseFloat(price),
-      calories: parseInt(calories),
+      calories: parseInt(calories) || 0,
       image,
       isPopular,
       category,
@@ -33,23 +35,9 @@ export default function AddFoodItemPage() {
     };
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/api/admin/menu', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(newFoodItem),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to add food item');
-      }
-
+      await addMenuItem(newFoodItem);
       alert('Food item added successfully!');
-      // Navigate to the menu page to trigger a refresh
-
+      
       // Clear form fields after successful submission
       setName('');
       setDescription('');
@@ -61,6 +49,8 @@ export default function AddFoodItemPage() {
       setIngredients('');
       setAllergens('');
 
+      // Optionally navigate to menu items list
+      navigate('/admin/menu-items');
     } catch (err) {
       setError(err.message);
       alert(`Error adding food item: ${err.message}`);

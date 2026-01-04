@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Outlet, Navigate } from 'react-router-dom';
+import { Link, Outlet, Navigate, useLocation } from 'react-router-dom';
 import { getMe } from '../utils/api';
 
 export default function AdminLayout() {
     const [admin, setAdmin] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const location = useLocation();
 
     useEffect(() => {
         getMe()
@@ -19,6 +20,11 @@ export default function AdminLayout() {
             });
     }, []);
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+    };
+
     if (loading) {
         return <div className="admin-loading">Loading admin data...</div>;
     }
@@ -27,6 +33,8 @@ export default function AdminLayout() {
         // Redirect to login page if authentication fails
         return <Navigate to="/login" replace />;
     }
+
+    const isMenuSettingsActive = location.pathname === '/admin' || location.pathname === '/admin/menu-settings';
 
     return (
         <div className="admin-layout">
@@ -37,9 +45,19 @@ export default function AdminLayout() {
                 </div>
                 <nav className="admin-nav">
                     <ul>
-                        <li><Link to="/admin">Dashboard</Link></li>
-                        <li><Link to="/admin/add-food-item">Add Food Item</Link></li>
-                        {/* Add more admin links here */}
+                        <li>
+                            <Link 
+                                to="/admin/menu-settings" 
+                                className={isMenuSettingsActive ? 'active' : ''}
+                            >
+                                Menu-Settings
+                            </Link>
+                        </li>
+                        <li>
+                            <button onClick={handleLogout} className="logout-button">
+                                Logout
+                            </button>
+                        </li>
                     </ul>
                 </nav>
             </aside>
