@@ -550,20 +550,29 @@ code {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
-  color: rgba(255, 255, 255, 0.9);
+  color: #FFC107;
+  font-size: 1em;
 }
 
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group textarea {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #555;
+  padding: 12px 15px;
+  border: 2px solid #555;
   border-radius: 8px;
   font-size: 1em;
   box-sizing: border-box;
-  background-color: #444;
+  background-color: #2a2a2a;
   color: #fff;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.form-group input[type="text"]:hover,
+.form-group input[type="number"]:hover,
+.form-group textarea:hover {
+  border-color: #666;
+  background-color: #333;
 }
 
 .form-group input[type="text"]:focus,
@@ -571,11 +580,20 @@ code {
 .form-group textarea:focus {
   outline: none;
   border-color: #FFC107;
+  background-color: #3a3a3a;
+  box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.1);
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group input[type="number"]::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .checkbox-group {
@@ -586,12 +604,17 @@ code {
 
 .checkbox-group input[type="checkbox"] {
   margin-right: 10px;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #FFC107;
 }
 
 .checkbox-group label {
   margin-bottom: 0;
+  color: #FFC107;
+  cursor: pointer;
+  font-weight: normal;
 }
 
 .add-food-item-form .submit-button {
@@ -1060,8 +1083,29 @@ code {
 /* New styles for category headers */
 .menu-sections-container {
   padding: 40px 20px;
-  background-color: #333;
+  background-image: url('./assets/feedback-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: #fff;
+  position: relative;
+}
+
+.menu-sections-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.menu-sections-container > * {
+  position: relative;
+  z-index: 1;
 }
 
 .menu-section-header {
@@ -1096,15 +1140,19 @@ code {
   align-items: center;
   margin-bottom: 30px;
   padding-top: 20px;
+  width: 100%;
+  text-align: center;
 }
 
 .category-title {
   font-size: 2em;
   color: #FFC107;
-  margin: 0;
+  margin: 0 auto;
   text-transform: capitalize;
   position: relative;
   padding-bottom: 10px;
+  text-align: center;
+  width: 100%;
 }
 
 .category-title::after {
